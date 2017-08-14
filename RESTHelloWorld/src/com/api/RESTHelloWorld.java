@@ -11,6 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+import java.io.File;
 
 @Path("/customers/")
 public class RESTHelloWorld {
@@ -50,5 +53,18 @@ public class RESTHelloWorld {
 	@Path("/addCustomer")
 	public Response getFormValue(@FormParam("name") String name,@FormParam("country") String country) {
 		return Response.status(200).entity("Name ="+name+"\tCountry="+country).build(); 
+	}
+	
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	//code for download file
+	
+	@GET
+	@Path("/download/")
+	@Produces("text/html")
+	public Response downloadFile() {
+		File file=new File("C:\\Users\\nigamh\\Desktop\\details.txt");
+		ResponseBuilder rb=Response.ok((Object)file);
+		rb.header("Content-Disposition", "attachment;filename=MagicFile.txt");
+		return rb.build();
 	}
 }
